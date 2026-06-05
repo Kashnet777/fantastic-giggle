@@ -137,24 +137,22 @@
     margin-top: 36px;
     position: relative;
     animation: fadeUp .8s .8s ease both;
-  }
-  .hero-photo-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    background: conic-gradient(var(--pink), var(--yellow), var(--mint), var(--blue), var(--purple), var(--pink));
-    animation: spin 4s linear infinite;
-    z-index: 0;
-  }
+}
+  
   @keyframes spin { to { transform: rotate(360deg); } }
   .hero-photo {
-    width: 300px;
-    height: 400px;
-    border-radius: 20px;
+    width: 320px;
+    height: 420px;
     object-fit: cover;
+
+    border-radius: 24px;
     border: 6px solid white;
-    box-shadow: 0 15px 40px rgba(0,0,0,.15);
+
+    box-shadow:
+      0 20px 50px rgba(255,107,157,.25),
+      0 10px 25px rgba(0,0,0,.12);
+
+    display:block;
 }
   .hero-photo-placeholder {
     width: 220px;
@@ -635,7 +633,7 @@
       <div class="crew-title">Certified Aunty</div>
       <div class="crew-sig-wrap">
         <!-- ✅ Replace with: <img src="signatures/paridhi-sig.png" alt="Paridhi's signature" /> -->
-<img src="signatures/paridhi-sig.png" alt="Paridhi Signature">      </div>
+<img src="signatures/paridhi-sig.jpg" alt="Paridhi Signature">      </div>
     </div>
 
     <!-- CARD 2: Aadya J -->
