@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy 19th Birthday, Aadya S. 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Caveat:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --yellow: #ffd93d;
+    --mint: #6bcb77;
+    --blue: #4d96ff;
+    --orange: #ff9a3c;
+    --purple: #c77dff;
+    --cream: #fff8f0;
+    --dark: #1a1a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── FIREWORKS CANVAS ── */
+  #fireworks-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  #fireworks-canvas.active { opacity: 1; }
+
+  /* ── CONFETTI CANVAS ── */
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 998;
+    transition: opacity 0.6s ease;
+  }
+  #confetti-canvas.hidden { opacity: 0; pointer-events: none; }
+
+  /* ── ONION NOTE ── */
+  .onion-note {
+    background: linear-gradient(135deg, #fff9c4, #ffe082);
+    border-left: 5px solid var(--yellow);
+    text-align: center;
+    padding: 18px 24px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: #5a4000;
+    position: relative;
+  }
+  .onion-note .emoji-row { font-size: 1.1rem; letter-spacing: 2px; margin-top: 6px; opacity: .7; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(160deg, #fff0f6 0%, #f0f8ff 50%, #f0fff4 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,107,157,.15) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(77,150,255,.15) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(255,217,61,.1) 0%, transparent 60%);
+  }
+
+  .hashtags {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--purple);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  .hero-sub {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--orange);
+    margin-top: 10px;
+    animation: fadeUp .8s .4s ease both;
+  }
+
+  /* typewriter */
+  .typewriter-wrap {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: #555;
+    margin-top: 24px;
+    min-height: 2.2em;
+    animation: fadeUp .8s .6s ease both;
+  }
+  #typewriter::after {
+    content: '|';
+    animation: blink .7s infinite;
+    color: var(--pink);
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* primary photo */
+  .hero-photo-wrap {
+    margin-top: 36px;
+    position: relative;
+    animation: fadeUp .8s .8s ease both;
+  }
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(var(--pink), var(--yellow), var(--mint), var(--blue), var(--purple), var(--pink));
+    animation: spin 4s linear infinite;
+    z-index: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-photo {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 6px solid white;
+    position: relative;
+    z-index: 1;
+    display: block;
+  }
+  .hero-photo-placeholder {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 6px solid white;
+    background: linear-gradient(135deg, #ffd6e7, #c8e6c9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 70px 20px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+  }
+  .section-title span {
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--yellow));
+    margin: 12px auto 0;
+  }
+
+  /* ── MESSAGE WITH SIDE PHOTOS ── */
+  .message-section {
+    background: linear-gradient(135deg, #fff0f6, #f8f0ff);
+    position: relative;
+  }
+  .message-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+  .message-side-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-shrink: 0;
+    width: 160px;
+    position: sticky;
+    top: 40px;
+  }
+  .side-photo-item {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    transition: transform .3s ease, box-shadow .3s ease;
+    background: linear-gradient(135deg, #ffd6e7, #d6e8ff, #d6f5e0);
+  }
+  .side-photo-item:hover { transform: scale(1.04) rotate(1deg); box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+  .side-photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .side-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    color: #aaa;
+    font-size: .85rem;
+    text-align: center;
+    padding: 10px;
+    gap: 6px;
+  }
+  .side-photo-placeholder .ph-icon { font-size: 1.6rem; }
+
+  @media(max-width: 900px) {
+    .message-layout { flex-direction: column; }
+    .message-side-photos {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      position: static;
+    }
+    .side-photo-item { width: calc(25% - 12px); aspect-ratio: 1/1; flex-shrink: 0; }
+  }
+  @media(max-width: 600px) {
+    .side-photo-item { width: calc(33% - 10px); }
+  }
+  .message-card {
+    max-width: 820px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    padding: 50px 48px;
+    box-shadow: 0 20px 60px rgba(255,107,157,.12), 0 4px 20px rgba(0,0,0,.06);
+    border: 2px solid rgba(255,107,157,.15);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+  }
+  .message-card::before {
+    content: '❤️';
+    position: absolute;
+    top: -20px; right: -20px;
+    font-size: 120px;
+    opacity: .04;
+    transform: rotate(-15deg);
+  }
+  .message-card p { margin-bottom: 18px; }
+  .message-card .nick-tags {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--purple);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .nick-tag {
+    background: linear-gradient(135deg, #f3e8ff, #ffe8f0);
+    border-radius: 20px;
+    padding: 4px 14px;
+    border: 1.5px solid rgba(199,125,255,.3);
+    white-space: nowrap;
+  }
+  .message-card .bullets {
+    list-style: none;
+    margin: 10px 0 18px 0;
+  }
+  .message-card .bullets li::before { content: '✨ '; }
+  .message-card .divider {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    color: var(--yellow);
+    margin: 24px 0;
+  }
+  .message-card .sign-off {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--pink);
+    text-align: right;
+    margin-top: 30px;
+  }
+
+  /* ── PHOTO GALLERY ── */
+  .gallery-section { background: #fff; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .photo-item {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,.1);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .photo-item:hover { transform: translateY(-6px) rotate(1deg); box-shadow: 0 16px 40px rgba(0,0,0,.15); }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #ffd6e7, #d6e8ff, #d6f5e0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    color: #999;
+    font-size: 1rem;
+    text-align: center;
+    padding: 20px;
+    gap: 8px;
+  }
+  .photo-placeholder .ph-icon { font-size: 2rem; }
+  .photo-label {
+    position: absolute;
+    bottom: 10px; left: 10px;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(6px);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-family: 'Caveat', cursive;
+    font-size: .85rem;
+    color: var(--dark);
+  }
+
+  /* ── CREW CARDS ── */
+  .crew-section {
+    background: linear-gradient(160deg, #f0fff4, #f0f8ff, #fff0f6);
+  }
+  .crew-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 28px;
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+  .crew-card {
+    background: white;
+    border-radius: 24px;
+    padding: 32px 24px 24px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    transition: transform .3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .crew-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .crew-card:nth-child(1)::before { background: linear-gradient(90deg, var(--pink), var(--orange)); }
+  .crew-card:nth-child(2)::before { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+  .crew-card:nth-child(3)::before { background: linear-gradient(90deg, var(--mint), var(--blue)); }
+  .crew-card:nth-child(4)::before { background: linear-gradient(90deg, var(--orange), var(--yellow)); }
+  .crew-card:hover { transform: translateY(-8px); }
+
+  .crew-photo-wrap {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    overflow: hidden;
+    border: 4px solid #f0f0f0;
+  }
+  .crew-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .crew-photo-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #ffd6e7, #d6e8ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+  }
+  .crew-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  .crew-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: #888;
+    margin: 4px 0 16px;
+  }
+  .crew-sig-wrap {
+    border-top: 1.5px dashed #eee;
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+  .crew-sig-wrap img {
+    max-width: 140px;
+    max-height: 60px;
+    object-fit: contain;
+    opacity: .85;
+  }
+  .crew-sig-placeholder {
+    font-family: 'Caveat', cursive;
+    font-size: .85rem;
+    color: #bbb;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  footer .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    background: linear-gradient(135deg, var(--pink), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+  }
+  footer p {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: rgba(255,255,255,.6);
+  }
+  .star-row { font-size: 1.2rem; letter-spacing: 3px; margin-top: 20px; }
+
+  /* ── FLOATING DECORATIONS ── */
+  .float-deco {
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    opacity: .08;
+    font-size: 4rem;
+    animation: floatDeco 8s ease-in-out infinite;
+  }
+  @keyframes floatDeco {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+  }
+
+  @media(max-width:600px) {
+    .message-card { padding: 32px 24px; }
+    .hero-photo, .hero-photo-placeholder { width: 170px; height: 170px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="fireworks-canvas"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ONION NOTE -->
+<div class="onion-note">
+  Dear Sri, Please read this message while chopping onions 😉 Thanks, Xoxo
+  <div class="emoji-row">⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hashtags">
+    #BloggerOfTheYear &nbsp;·&nbsp; #YakuzaLeader &nbsp;·&nbsp; #Jesus &nbsp;·&nbsp; #Aadyeahhh
+  </div>
+
+  <h1 class="hero-title">Happy Birthday,<br/>Aadya S. 🎂✨</h1>
+  <p class="hero-sub">Our One of the Two and not the Only 😅</p>
+
+  <div class="typewriter-wrap">
+    <span id="typewriter"></span>
+  </div>
+
+  <!-- PRIMARY PHOTO — replace src with your image path -->
+  <div class="hero-photo-wrap">
+    <!-- ✅ PRIMARY PHOTO: replace the placeholder div below with:
+         <img class="hero-photo" src="photos/aadya-primary.jpg" alt="Aadya S." /> -->
+    <div class="hero-photo-placeholder">
+      📸<br/>Primary Photo<br/>(aadya-primary.jpg)
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGE -->
+<section class="message-section" id="message-section">
+  <h2 class="section-title"><span>A Letter From Your Chaos Crew</span></h2>
+  <div class="message-layout">
+
+    <!-- LEFT PHOTOS: aadya-1 to aadya-4 -->
+    <div class="message-side-photos">
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-1.jpg" alt="Memory 1" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-1.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-2.jpg" alt="Memory 2" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-2.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-3.jpg" alt="Memory 3" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-3.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-4.jpg" alt="Memory 4" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-4.jpg</div>
+      </div>
+    </div>
+
+    <!-- MESSAGE CARD -->
+    <div class="message-card">
+    <p>Honestly, trying to summarize you is like trying to explain a plot twist — you're a beautiful contradiction in the best possible way.</p>
+
+    <p>On one hand, you have an intensely driven, passionate, and fiercely curious mind. You read, you explore, and you write blogs that are so brilliant, thoughtful, and entertaining that they deserve a much larger audience. Seriously, we <strong>LOVE</strong> them.</p>
+
+    <p>On the other hand, you have one of the kindest souls we've ever known. The way you care for plants, nature, and the world around you is genuinely inspiring. The world is just a greener, gentler place because you're in it. 🌿✨</p>
+
+    <p>Of course, we can't forget the legends.</p>
+
+    <p>To everyone else, you might seem like the quiet one. But we know the secret 🤫. Behind that calm exterior is the feared and respected leader of THE Yakuza empire 🕶️😏 — you're secretly running a whole Yakuza syndicate, probably planning world domination behind the scenes.</p>
+
+    <p>Also the reason why we call you <strong>"Jesus."</strong> Not because of miracles (although the evidence is mounting), but because of your patience with us, your dedication to what you care about, your love for the planet, and your ability to inspire the people around you. Honestly, it's a little suspicious. How can someone be THAT cool??? 😉✌🏼</p>
+
+    <p>And then there's <strong>"Ms. Perfectionist"</strong> — because somehow, no matter what it is, you always find a way to do it properly. While the rest of us are improvising our way through life, you're out here setting standards. 🥇📊</p>
+
+    <div class="divider">⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆</div>
+
+    <p>And finally, <strong>"Taare Zameen Par."</strong></p>
+
+    <p>Not because you're some flawless shining star floating gracefully across the sky.</p>
+
+    <p>No, it's because half the time you're operating on a completely different wavelength from the rest of humanity. While everyone else is following the plot, you're busy discovering an entirely new subplot that nobody asked for, nobody understands, and somehow only you think is relevant.</p>
+
+    <p>Much like the movie, there are moments when we genuinely have no idea what's going on, but we've learned not to question it. We've simply accepted that your brain follows a set of rules that were never released to the public.</p>
+
+    <p>At this point, trying to predict your thought process is like trying to debug code without reading the documentation. Technically possible, but nobody has the time, patience, or qualifications.</p>
+
+    <p>Whether you're a misunderstood genius or just professionally confusing remains one of the group's greatest unsolved mysteries. 🔍🕵🏼‍♀️</p>
+
+    <div class="divider">⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆</div>
+
+    <p>As you step into your 19th year, we hope life gives you everything you've worked so hard for:</p>
+    <ul class="bullets">
+      <li>Monumental success</li>
+      <li>Endless adventures</li>
+      <li>Brilliant new books to read</li>
+      <li>Flourishing plants</li>
+      <li>Countless reasons to smile</li>
+      <li>And, most importantly, an unlimited supply of golgappe 🌮✨</li>
+    </ul>
+
+    <p>Thank you for being such a wonderful friend, for all the memories we've shared, and for simply being you.</p>
+
+    <p>Have the happiest birthday, the best year ahead, and a life filled with everything you deserve.</p>
+
+    <div class="sign-off">
+      With love,<br/>Your Chaos Crew ❤️<br/>
+      🥂 Happy 19th Birthday, Aadya S. &lt;3 🎂
+    </div>
+    </div><!-- end .message-card -->
+
+    <!-- RIGHT PHOTOS: aadya-5 to aadya-8 -->
+    <div class="message-side-photos">
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-5.jpg" alt="Memory 5" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-5.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-6.jpg" alt="Memory 6" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-6.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-7.jpg" alt="Memory 7" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-7.jpg</div>
+      </div>
+      <div class="side-photo-item">
+        <!-- ✅ <img src="photos/aadya-8.jpg" alt="Memory 8" /> -->
+        <div class="side-photo-placeholder"><span class="ph-icon">📸</span>aadya-8.jpg</div>
+      </div>
+    </div>
+
+  </div><!-- end .message-layout -->
+</section>
+
+<!-- CHAOS CREW CARDS -->
+<section class="crew-section">
+  <h2 class="section-title"><span>Your Chaos Crew 💌</span></h2>
+  <div class="crew-grid">
+
+    <!-- CARD 1: Paridhi -->
+    <div class="crew-card">
+      <div class="crew-photo-wrap">
+        <!-- ✅ Replace with: <img src="photos/paridhi.jpg" alt="Paridhi" /> -->
+        <div class="crew-photo-placeholder">👩</div>
+      </div>
+      <div class="crew-name">Paridhi</div>
+      <div class="crew-title">Certified Aunty</div>
+      <div class="crew-sig-wrap">
+        <!-- ✅ Replace with: <img src="signatures/paridhi-sig.png" alt="Paridhi's signature" /> -->
+        <div class="crew-sig-placeholder">[ Paridhi's signature image here ]<br/>signatures/paridhi-sig.png</div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Aadya J -->
+    <div class="crew-card">
+      <div class="crew-photo-wrap">
+        <!-- ✅ Replace with: <img src="photos/aadyaj.jpg" alt="Aadya J" /> -->
+        <div class="crew-photo-placeholder">👩</div>
+      </div>
+      <div class="crew-name">Aadya J.</div>
+      <div class="crew-title">The Mature One</div>
+      <div class="crew-sig-wrap">
+        <!-- ✅ Replace with: <img src="signatures/aadyaj-sig.png" alt="Aadya J's signature" /> -->
+        <div class="crew-sig-placeholder">[ Aadya J's signature image here ]<br/>signatures/aadyaj-sig.png</div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Nitya -->
+    <div class="crew-card">
+      <div class="crew-photo-wrap">
+        <!-- ✅ Replace with: <img src="photos/nitya.jpg" alt="Nitya" /> -->
+        <div class="crew-photo-placeholder">👩</div>
+      </div>
+      <div class="crew-name">Nitya</div>
+      <div class="crew-title">The Legendary Menace</div>
+      <div class="crew-sig-wrap">
+        <!-- ✅ Replace with: <img src="signatures/nitya-sig.png" alt="Nitya's signature" /> -->
+        <div class="crew-sig-placeholder">[ Nitya's signature image here ]<br/>signatures/nitya-sig.png</div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Shubh -->
+    <div class="crew-card">
+      <div class="crew-photo-wrap">
+        <!-- ✅ Replace with: <img src="photos/shubh.jpg" alt="Shubh" /> -->
+        <div class="crew-photo-placeholder">👦</div>
+      </div>
+      <div class="crew-name">Shubh</div>
+      <div class="crew-title">Someone You Would Kill Without a Second Thought</div>
+      <div class="crew-sig-wrap">
+        <!-- ✅ Replace with: <img src="signatures/shubh-sig.png" alt="Shubh's signature" /> -->
+        <div class="crew-sig-placeholder">[ Shubh's signature image here ]<br/>signatures/shubh-sig.png</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">Happy 19th, Aadya S. 🎂</div>
+  <p>Built Different Since Day One ✨</p>
+  <p style="margin-top:10px;font-size:1rem;opacity:.5;">No matter where life takes us, you'll always have a place in this group.</p>
+  <div class="star-row">⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆ ⋆｡𖦹°⭒˚｡⋆</div>
+</footer>
+
+<script>
+// ── TYPEWRITER ──
+const phrases = [
+  "The Yakuza Leader 🕶️",
+  "The Jesus of Our Group 🙏",
+  "Ms. Perfectionist 🥇",
+  "Taare Zameen Par ✨",
+  "Blogger of the Year 📝",
+  "Our Favourite Person 💕"
+];
+let pi = 0, ci = 0, deleting = false;
+const tw = document.getElementById('typewriter');
+function type() {
+  const word = phrases[pi];
+  if (!deleting) {
+    tw.textContent = word.slice(0, ++ci);
+    if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; }
+  } else {
+    tw.textContent = word.slice(0, --ci);
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+  }
+  setTimeout(type, deleting ? 50 : 90);
+}
+type();
+
+// ── CONFETTI ──
+const confettiCanvas = document.getElementById('confetti-canvas');
+const cCtx = confettiCanvas.getContext('2d');
+confettiCanvas.width = window.innerWidth;
+confettiCanvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  fwCanvas.width = window.innerWidth;
+  fwCanvas.height = window.innerHeight;
+});
+
+const COLORS = ['#ff6b9d','#ffd93d','#6bcb77','#4d96ff','#c77dff','#ff9a3c','#ff4d6d','#ade8f4'];
+const pieces = Array.from({length: 120}, () => ({
+  x: Math.random() * confettiCanvas.width,
+  y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+  r: Math.random() * 8 + 4,
+  color: COLORS[Math.floor(Math.random() * COLORS.length)],
+  speed: Math.random() * 2 + 1,
+  spin: (Math.random() - .5) * .2,
+  angle: Math.random() * Math.PI * 2,
+  drift: (Math.random() - .5) * 1.5,
+  shape: Math.random() > .5 ? 'circle' : 'rect'
+}));
+
+let confettiActive = true;
+function drawConfetti() {
+  cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  if (!confettiActive) return;
+  pieces.forEach(p => {
+    cCtx.save();
+    cCtx.translate(p.x, p.y);
+    cCtx.rotate(p.angle);
+    cCtx.fillStyle = p.color;
+    cCtx.globalAlpha = .8;
+    if (p.shape === 'circle') {
+      cCtx.beginPath();
+      cCtx.arc(0, 0, p.r, 0, Math.PI * 2);
+      cCtx.fill();
+    } else {
+      cCtx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+    }
+    cCtx.restore();
+    p.y += p.speed;
+    p.x += p.drift;
+    p.angle += p.spin;
+    if (p.y > confettiCanvas.height + 20) { p.y = -20; p.x = Math.random() * confettiCanvas.width; }
+  });
+  requestAnimationFrame(drawConfetti);
+}
+drawConfetti();
+
+// ── FIREWORKS ──
+const fwCanvas = document.getElementById('fireworks-canvas');
+const fCtx = fwCanvas.getContext('2d');
+fwCanvas.width = window.innerWidth;
+fwCanvas.height = window.innerHeight;
+
+let fireworksActive = false;
+const particles = [];
+
+function randomColor() { return COLORS[Math.floor(Math.random() * COLORS.length)]; }
+
+function launchFirework() {
+  // Only launch from the sides (left 15% or right 15%)
+  const side = Math.random() < 0.5 ? 'left' : 'right';
+  const x = side === 'left'
+    ? Math.random() * fwCanvas.width * 0.15
+    : fwCanvas.width - Math.random() * fwCanvas.width * 0.15;
+  const y = Math.random() * fwCanvas.height * 0.6 + fwCanvas.height * 0.1;
+  const color = randomColor();
+  const count = 60 + Math.floor(Math.random() * 40);
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 / count) * i;
+    const speed = Math.random() * 4 + 2;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      alpha: 1,
+      color,
+      r: Math.random() * 3 + 1.5,
+      decay: Math.random() * 0.015 + 0.012
+    });
+  }
+}
+
+let fwLaunchTimer = 0;
+function drawFireworks(ts) {
+  if (!fireworksActive) return;
+  fCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+  // Launch a new firework every ~700ms
+  if (ts - fwLaunchTimer > 700) {
+    launchFirework();
+    if (Math.random() < 0.4) launchFirework(); // occasional double burst
+    fwLaunchTimer = ts;
+  }
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.06; // gravity
+    p.vx *= 0.98;
+    p.alpha -= p.decay;
+    if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+    fCtx.save();
+    fCtx.globalAlpha = p.alpha;
+    fCtx.fillStyle = p.color;
+    fCtx.beginPath();
+    fCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    fCtx.fill();
+    fCtx.restore();
+  }
+  requestAnimationFrame(drawFireworks);
+}
+
+// ── SCROLL DETECTION ──
+const messageSection = document.getElementById('message-section');
+let hasEnteredMessage = false;
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !hasEnteredMessage) {
+      hasEnteredMessage = true;
+      // Stop confetti
+      confettiActive = false;
+      confettiCanvas.classList.add('hidden');
+      // Start fireworks
+      fireworksActive = true;
+      fwCanvas.classList.add('active');
+      requestAnimationFrame(drawFireworks);
+    } else if (!entry.isIntersecting && hasEnteredMessage) {
+      // Scrolled back up above message — restore confetti, stop fireworks
+      hasEnteredMessage = false;
+      fireworksActive = false;
+      fwCanvas.classList.remove('active');
+      confettiActive = true;
+      confettiCanvas.classList.remove('hidden');
+      drawConfetti();
+    }
+  });
+}, { threshold: 0.15 });
+
+observer.observe(messageSection);
+</script>
+</body>
+</html>
