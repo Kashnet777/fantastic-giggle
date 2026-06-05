@@ -141,18 +141,27 @@
   
   @keyframes spin { to { transform: rotate(360deg); } }
   .hero-photo {
-    width: 320px;
-    height: 420px;
-    object-fit: cover;
+    width: 340px;
+    height: 425px; /* 4:5 ratio */
+
+    object-fit: contain;
 
     border-radius: 24px;
     border: 6px solid white;
 
     box-shadow:
-      0 20px 50px rgba(255,107,157,.25),
-      0 10px 25px rgba(0,0,0,.12);
+        0 20px 50px rgba(0,0,0,.15),
+        0 10px 25px rgba(0,0,0,.08);
 
-    display:block;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+@media(max-width:600px){
+    .hero-photo{
+        width: 260px;
+        height: 325px;
+    }
 }
   .hero-photo-placeholder {
     width: 220px;
